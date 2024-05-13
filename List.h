@@ -47,6 +47,42 @@ public:
 
 	void pop_back();
 
+	template<typename T>
+	void push_front(const T& data) {
+		Node* node = new Node(data);
+		node->_next = _head;
+		_head = node;
+
+		if(_tail == nullptr)
+			_tail = node;
+	} 
+
+	template<typename T>
+	void insert(const T& data, const size_t ind) {
+		if(ind < 0)
+			return;
+		Node* left = _head;
+		for(size_t i = 0; i != ind; ++i) {
+			if(left == nullptr)
+				return;
+
+			left = left->_next;
+		}
+
+		Node* right = left->_next;
+		Node* node = new Node(data);
+	
+		left->_next = node;
+		node->_next = right;
+
+		if(right == nullptr)
+			_tail = node;
+	}
+
+	void erase(const size_t&);
+
+	void pop_front();
+
 	void clear();
 
 	List create_copy() const;

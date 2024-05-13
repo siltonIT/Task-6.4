@@ -69,6 +69,50 @@ void List::pop_back() {
 	_tail = node;
 }
 
+void List::pop_front() {
+	if(_head == nullptr)
+		return;
+
+	if(_head == _tail) {
+		delete _tail;
+		_head = _tail = nullptr;
+		return;
+	}
+
+	Node* node = _head;
+	_head = node->_next;
+	delete node;
+}
+
+void List::erase(const size_t& ind) {
+	if(ind < 0)
+		return;
+	if(ind == 1) {
+		pop_front();
+		return;
+	}
+
+	Node* left = _head;
+	for(size_t i = 0; i != ind; ++i) {
+		if(left == nullptr)
+			return;
+
+		left = left->_next;
+	}
+
+	Node* node = left->_next;
+	if(node == nullptr)
+		return;
+
+	Node* right = node->_next;
+
+	left->_next = right;
+	if(node == _tail)
+		_tail = left;
+
+	delete node;
+}
+
 void List::clear() {
 	Node* prev = _head;
 	Node* curr = _head;
